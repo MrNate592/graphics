@@ -1,0 +1,15 @@
+﻿  Main.cpp
+C:\Users\natha\source\repos\opengl-tutorials\YoutubeOpenGL 8 - Camera\Main.cpp(29,21): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\natha\source\repos\opengl-tutorials\YoutubeOpenGL 8 - Camera\Main.cpp(40,21): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\natha\source\repos\opengl-tutorials\YoutubeOpenGL 8 - Camera\Main.cpp(51,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\natha\source\repos\opengl-tutorials\YoutubeOpenGL 8 - Camera\Main.cpp(52,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\natha\source\repos\opengl-tutorials\YoutubeOpenGL 8 - Camera\Main.cpp(158,21): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\natha\source\repos\opengl-tutorials\YoutubeOpenGL 8 - Camera\Main.cpp(190,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\natha\source\repos\opengl-tutorials\YoutubeOpenGL 8 - Camera\Main.cpp(191,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\natha\source\repos\opengl-tutorials\YoutubeOpenGL 8 - Camera\Main.cpp(194,23): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\natha\source\repos\opengl-tutorials\YoutubeOpenGL 8 - Camera\Main.cpp(221,21): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\natha\source\repos\opengl-tutorials\YoutubeOpenGL 8 - Camera\Main.cpp(599,21): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\natha\source\repos\opengl-tutorials\YoutubeOpenGL 8 - Camera\Main.cpp(683,64): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\natha\source\repos\opengl-tutorials\YoutubeOpenGL 8 - Camera\Main.cpp(687,64): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\natha\source\repos\opengl-tutorials\YoutubeOpenGL 8 - Camera\Main.cpp(699,64): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+  YoutubeOpenGL.vcxproj -> C:\Users\natha\source\repos\opengl-tutorials\YoutubeOpenGL 8 - Camera\x64\Debug\YoutubeOpenGL.exe
