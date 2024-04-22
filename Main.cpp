@@ -16,6 +16,13 @@
 #include <vector>
 #include <cmath>
 
+//------- Ignore this ----------
+#include<filesystem>
+namespace fs = std::filesystem;
+//------------------------------
+
+
+
 const unsigned int width = 800;
 const unsigned int height = 800;
 #define M_PI 3.14159265359
@@ -231,191 +238,67 @@ std::vector<float> generatePostCircleVertices(float centerX, float centerY, floa
     return vertices;
 }
 
-// Function to generate vertices for a staircase
+#include <cmath> // Include cmath for trigonometric functions
+
 std::vector<float> generateStaircaseVertices(float staircaseWidth, float staircaseHeight, float staircaseDepth, int numSteps) {
     std::vector<float> vertices;
 
     // Calculate dimensions of each step
-    float stepWidth = staircaseWidth / numSteps;
+    float stepWidth = staircaseWidth;
     float stepHeight = staircaseHeight / numSteps;
     float stepDepth = staircaseDepth;
-    // Generate vertices for each step, including the left face and floor
-for (int i = 0; i < numSteps; ++i) {
-    // Calculate coordinates of the four corners of the step
-    float x1 = -staircaseWidth / 2.0f + i * stepWidth;
-    float y1 = i * stepHeight;
-    float z1 = 0.0f;
 
-    float x2 = x1 + stepWidth;
-    float y2 = y1;
-    float z2 = 0.0f;
+    // Angle for rotating each step
+    float angleIncrement = 360.0f / numSteps; // Full circle for one revolution
 
-    float x3 = x1 + stepWidth;
-    float y3 = y1;
-    float z3 = stepDepth;
+    // Radius of the cylinder
+    float radius = 5.5f;
 
-    float x4 = x1;
-    float y4 = y1;
-    float z4 = stepDepth;
-
-    float x5 = x1;
-    float y5 = y1 + stepHeight;
-    float z5 = 0.0f;
-
-    float x6 = x1 + stepWidth;
-    float y6 = y1 + stepHeight;
-    float z6 = 0.0f;
-
-    float x7 = x1 + stepWidth;
-    float y7 = y1 + stepHeight;
-    float z7 = stepDepth;
-
-    float x8 = x1;
-    float y8 = y1 + stepHeight;
-    float z8 = stepDepth;
-
-    // Add vertices of the step (including left face and floor) to the vector
-    // Front face
-    vertices.push_back(x1);
-    vertices.push_back(y1);
-    vertices.push_back(z1);
-
-    vertices.push_back(x2);
-    vertices.push_back(y2);
-    vertices.push_back(z2);
-
-    vertices.push_back(x3);
-    vertices.push_back(y3);
-    vertices.push_back(z3);
-
-    vertices.push_back(x3);
-    vertices.push_back(y3);
-    vertices.push_back(z3);
-
-    vertices.push_back(x4);
-    vertices.push_back(y4);
-    vertices.push_back(z4);
-
-    vertices.push_back(x1);
-    vertices.push_back(y1);
-    vertices.push_back(z1);
-
-    // Left face
-    vertices.push_back(x1);
-    vertices.push_back(y1);
-    vertices.push_back(z1);
-
-    vertices.push_back(x4);
-    vertices.push_back(y4);
-    vertices.push_back(z4);
-
-    vertices.push_back(x8);
-    vertices.push_back(y8);
-    vertices.push_back(z8);
-
-    vertices.push_back(x8);
-    vertices.push_back(y8);
-    vertices.push_back(z8);
-
-    vertices.push_back(x5);
-    vertices.push_back(y5);
-    vertices.push_back(z5);
-
-    vertices.push_back(x1);
-    vertices.push_back(y1);
-    vertices.push_back(z1);
-
-    // Floor
-    vertices.push_back(x1);
-    vertices.push_back(y1);
-    vertices.push_back(z1);
-
-    vertices.push_back(x2);
-    vertices.push_back(y2);
-    vertices.push_back(z2);
-
-    vertices.push_back(x6);
-    vertices.push_back(y6);
-    vertices.push_back(z6);
-
-    vertices.push_back(x6);
-    vertices.push_back(y6);
-    vertices.push_back(z6);
-
-    vertices.push_back(x5);
-    vertices.push_back(y5);
-    vertices.push_back(z5);
-
-    vertices.push_back(x1);
-    vertices.push_back(y1);
-    vertices.push_back(z1);
-}
-
-    // Calculate the angle of the staircase
-    float stairAngle = atan(staircaseHeight / (numSteps * stepWidth));
+    // Generate vertices for each step, including all faces
     for (int i = 0; i < numSteps; ++i) {
+        // Calculate rotation angle for current step
+        float angle = i * angleIncrement;
+        float angleRad = angle * M_PI / 180.0f; // Convert to radians
+
+        // Calculate coordinates of the center of the step
+        float centerX = radius * cos(angleRad);
+        float centerY = i * stepHeight;
+        float centerZ = radius * sin(angleRad);
+
         // Calculate coordinates of the four corners of the step
-        float x1 = -staircaseWidth / 2.0f + i * stepWidth + stepWidth;
-        float y1 = i * stepHeight;
-        float z1 = 0.0f;
+        float x1 = centerX - stepWidth / 2.0f;
+        float y1 = centerY;
+        float z1 = centerZ;
 
-        float x2 = x1;
-        float y2 = y1;
-        float z2 = stepDepth;
+        float x2 = centerX + stepWidth / 2.0f;
+        float y2 = centerY;
+        float z2 = centerZ;
 
-        float x3 = x1;
-        float y3 = y1 + stepHeight;
-        float z3 = stepDepth;
+        float x3 = centerX + stepWidth / 2.0f;
+        float y3 = centerY;
+        float z3 = centerZ + stepDepth;
 
-        float x4 = x1;
-        float y4 = y1 + stepHeight;
-        float z4 = 0.0f;
+        float x4 = centerX - stepWidth / 2.0f;
+        float y4 = centerY;
+        float z4 = centerZ + stepDepth;
 
-        // Add vertices of the right face to the vector
-        vertices.push_back(x1);
-        vertices.push_back(y1);
-        vertices.push_back(z1);
+        float x5 = x1;
+        float y5 = centerY + stepHeight;
+        float z5 = z1;
 
-        vertices.push_back(x2);
-        vertices.push_back(y2);
-        vertices.push_back(z2);
+        float x6 = x2;
+        float y6 = centerY + stepHeight;
+        float z6 = z2;
 
-        vertices.push_back(x3);
-        vertices.push_back(y3);
-        vertices.push_back(z3);
+        float x7 = x3;
+        float y7 = centerY + stepHeight;
+        float z7 = z3;
 
-        vertices.push_back(x3);
-        vertices.push_back(y3);
-        vertices.push_back(z3);
+        float x8 = x4;
+        float y8 = centerY + stepHeight;
+        float z8 = z4;
 
-        vertices.push_back(x4);
-        vertices.push_back(y4);
-        vertices.push_back(z4);
-
-        vertices.push_back(x1);
-        vertices.push_back(y1);
-        vertices.push_back(z1);
-    }
-    //// Generate vertices for each step
-    for (int i = 0; i < numSteps; ++i) {
-        // Calculate coordinates of the four corners of the step
-        float x1 = -staircaseWidth / 2.0f + i * stepWidth;
-        float y1 = i * stepHeight;
-        float z1 = 0.0f;
-
-        float x2 = x1 + stepWidth;
-        float y2 = y1;
-        float z2 = 0.0f;
-
-        float x3 = x2;
-        float y3 = y1 + stepHeight;
-        float z3 = stepDepth;
-
-        float x4 = x1;
-        float y4 = y1 + stepHeight;
-        float z4 = stepDepth;
-
-        // Add vertices of the step to the vector
+        // Add vertices of the step (including all faces) to the vector
         // Front face
         vertices.push_back(x1);
         vertices.push_back(y1);
@@ -441,51 +324,32 @@ for (int i = 0; i < numSteps; ++i) {
         vertices.push_back(y1);
         vertices.push_back(z1);
 
-    //    // Left face
-    //    vertices.push_back(x1);
-    //    vertices.push_back(y1);
-    //    vertices.push_back(z1);
+        // Left face
+        vertices.push_back(x1);
+        vertices.push_back(y1);
+        vertices.push_back(z1);
 
-    //    vertices.push_back(x1);
-    //    vertices.push_back(y1);
-    //    vertices.push_back(z1 - stepDepth);
+        vertices.push_back(x4);
+        vertices.push_back(y4);
+        vertices.push_back(z4);
 
-    //    vertices.push_back(x4);
-    //    vertices.push_back(y4);
-    //    vertices.push_back(z4 - stepDepth);
+        vertices.push_back(x8);
+        vertices.push_back(y8);
+        vertices.push_back(z8);
 
-    //    vertices.push_back(x4);
-    //    vertices.push_back(y4);
-    //    vertices.push_back(z4 - stepDepth);
+        vertices.push_back(x8);
+        vertices.push_back(y8);
+        vertices.push_back(z8);
 
-    //    vertices.push_back(x4);
-    //    vertices.push_back(y4);
-    //    vertices.push_back(z4);
+        vertices.push_back(x5);
+        vertices.push_back(y5);
+        vertices.push_back(z5);
 
-    //    vertices.push_back(x1);
-    //    vertices.push_back(y1);
-    //    vertices.push_back(z1);
-    }
-    // Generate vertices for the left face of each step
-    for (int i = 0; i < numSteps; ++i) {
-        // Calculate coordinates of the four corners of the step
-        float x1 = -staircaseWidth / 2.0f + i * stepWidth;
-        float y1 = i * stepHeight;
-        float z1 = 0.0f;
+        vertices.push_back(x1);
+        vertices.push_back(y1);
+        vertices.push_back(z1);
 
-        float x2 = x1;
-        float y2 = y1;
-        float z2 = stepDepth;
-
-        float x3 = x1;
-        float y3 = y1 + stepHeight;
-        float z3 = stepDepth;
-
-        float x4 = x1;
-        float y4 = y1 + stepHeight;
-        float z4 = 0.0f;
-
-        // Add vertices of the left face to the vector
+        // Floor
         vertices.push_back(x1);
         vertices.push_back(y1);
         vertices.push_back(z1);
@@ -494,30 +358,100 @@ for (int i = 0; i < numSteps; ++i) {
         vertices.push_back(y2);
         vertices.push_back(z2);
 
-        vertices.push_back(x3);
-        vertices.push_back(y3);
-        vertices.push_back(z3);
+        vertices.push_back(x6);
+        vertices.push_back(y6);
+        vertices.push_back(z6);
+
+        vertices.push_back(x6);
+        vertices.push_back(y6);
+        vertices.push_back(z6);
+
+        vertices.push_back(x5);
+        vertices.push_back(y5);
+        vertices.push_back(z5);
+
+        vertices.push_back(x1);
+        vertices.push_back(y1);
+        vertices.push_back(z1);
+
+        // Right face
+        vertices.push_back(x2);
+        vertices.push_back(y2);
+        vertices.push_back(z2);
 
         vertices.push_back(x3);
         vertices.push_back(y3);
         vertices.push_back(z3);
+
+        vertices.push_back(x7);
+        vertices.push_back(y7);
+        vertices.push_back(z7);
+
+        vertices.push_back(x7);
+        vertices.push_back(y7);
+        vertices.push_back(z7);
+
+        vertices.push_back(x6);
+        vertices.push_back(y6);
+        vertices.push_back(z6);
+
+        vertices.push_back(x2);
+        vertices.push_back(y2);
+        vertices.push_back(z2);
+
+        // Bottom face
+        vertices.push_back(x1);
+        vertices.push_back(y1);
+        vertices.push_back(z1);
 
         vertices.push_back(x4);
         vertices.push_back(y4);
         vertices.push_back(z4);
 
+        vertices.push_back(x3);
+        vertices.push_back(y3);
+        vertices.push_back(z3);
+
+        vertices.push_back(x3);
+        vertices.push_back(y3);
+        vertices.push_back(z3);
+
+        vertices.push_back(x2);
+        vertices.push_back(y2);
+        vertices.push_back(z2);
+
         vertices.push_back(x1);
         vertices.push_back(y1);
         vertices.push_back(z1);
+
+        // Top face
+        vertices.push_back(x5);
+        vertices.push_back(y5);
+        vertices.push_back(z5);
+
+        vertices.push_back(x6);
+        vertices.push_back(y6);
+        vertices.push_back(z6);
+
+        vertices.push_back(x7);
+        vertices.push_back(y7);
+        vertices.push_back(z7);
+
+        vertices.push_back(x7);
+        vertices.push_back(y7);
+        vertices.push_back(z7);
+
+        vertices.push_back(x8);
+        vertices.push_back(y8);
+        vertices.push_back(z8);
+
+        vertices.push_back(x5);
+        vertices.push_back(y5);
+        vertices.push_back(z5);
     }
 
     return vertices;
 }
-
-
-
-
-
 
 
 int main() {
@@ -553,17 +487,17 @@ int main() {
     Shader shaderProgram("default.vert", "default.frag");
 
     // Define cylinder parameters
-    float cylinderRadius = 2.1f;
+    float cylinderRadius = 2.6f;
     float cylinderBaseRadius = 1.5f; // Initial base radius
     float cylinderHeight = 22.0f; // Increased height
     int numSegments = 30;
     float postHeight = 0.1f;
     int numPostCircleSegments = 50; // Number of fence posts in the circle
     
-    float staircaseWidth = 20.0f;
-    float staircaseHeight = 15.0f;
+    float staircaseWidth = 3.0f;
+    float staircaseHeight = 20.0f;
     float staircaseDepth = 5.0f;
-    int numSteps = 20;
+    int numSteps = 30;
 
     // Generate vertices for the staircase
     std::vector<float> staircaseVertices = generateStaircaseVertices(staircaseWidth, staircaseHeight, staircaseDepth, numSteps);
@@ -584,8 +518,23 @@ int main() {
     VAO1.Bind();
     VBO VBO1(cylinderVertices.data(), cylinderVertices.size() * sizeof(float));
     VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 3 * sizeof(float), (void*)0);
+    VAO1.LinkAttrib(VBO1, 1, 3, GL_FLOAT, 3 * sizeof(float), (void*)0);
+    VAO1.LinkAttrib(VBO1, 2, 2, GL_FLOAT, 3 * sizeof(float), (void*)0);
     VAO1.Unbind();
     VBO1.Unbind();
+
+    GLuint uniID = glGetUniformLocation(shaderProgram.ID, "scale");
+
+    std::string parentDir = (fs::current_path().fs::path::parent_path()).string();
+    std::string texPath = "/Resources/YoutubeOpenGL 7 - Going 3D/";
+
+    // Texture
+    Texture brickTex((parentDir + texPath + "img.png").c_str(), GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+    brickTex.texUnit(shaderProgram, "tex0", 0);
+
+    Texture stair((parentDir + texPath + "brick.png").c_str(), GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+    stair.texUnit(shaderProgram, "tex1", 0);
+
 
     // Create VAO for fence posts
     VAO VAO2;
@@ -644,11 +593,12 @@ int main() {
     VAO_PostCircle.Unbind();
     VBO_PostCircle.Unbind();
 
-
     VAO VAO3;
     VAO3.Bind();
     VBO VBO3(staircaseVertices.data(), staircaseVertices.size() * sizeof(float));
     VAO3.LinkAttrib(VBO3, 0, 3, GL_FLOAT, 3 * sizeof(float), (void*)0);
+    VAO1.LinkAttrib(VBO3, 1, 3, GL_FLOAT, 3 * sizeof(float), (void*)0);
+    VAO1.LinkAttrib(VBO3, 2, 2, GL_FLOAT, 3 * sizeof(float), (void*)0);
     VAO3.Unbind();
     VBO3.Unbind();
 
@@ -672,19 +622,21 @@ int main() {
         camera.Inputs(window);
         // Update and export the camera matrix to the Vertex Shader
         camera.Matrix(30.0f, 0.1f, 100.0f, shaderProgram, "camMatrix");
+        glUniform1f(uniID, 10.5f);
+        brickTex.Bind();
 
         // Draw the cylinder
         VAO1.Bind();
-        //glDrawArrays(GL_TRIANGLES, 0, cylinderVertices.size() / 3);
+        glDrawArrays(GL_TRIANGLES, 0, cylinderVertices.size() / 3);
         VAO1.Unbind();
 
         // Draw the fence posts
         VAO2.Bind();
-        glDrawArrays(GL_TRIANGLES, 0, fencePostVertices.size() / 3);
+       // glDrawArrays(GL_TRIANGLES, 0, fencePostVertices.size() / 3);
         VAO2.Unbind();
 
         VAO_Ground.Bind();
-        glDrawArrays(GL_TRIANGLE_FAN, 0, groundVertices.size() / 3);
+        //glDrawArrays(GL_TRIANGLE_FAN, 0, groundVertices.size() / 3);
         VAO_Ground.Unbind();
 
         VAO_Roof.Bind();
@@ -694,6 +646,8 @@ int main() {
         VAO_PostCircle.Bind();
         //glDrawArrays(GL_TRIANGLES, 0, postCircleVertices.size() / 3);
         VAO_PostCircle.Unbind();
+
+        stair.Bind();
 
         VAO3.Bind();
         glDrawArrays(GL_TRIANGLES, 0, staircaseVertices.size() / 3);
