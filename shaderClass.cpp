@@ -1,5 +1,4 @@
 #include"shaderClass.h"
-#include <glm/gtc/type_ptr.hpp>
 
 // Reads a text file and outputs a string with everything in the text file
 std::string get_file_contents(const char* filename)
@@ -16,14 +15,6 @@ std::string get_file_contents(const char* filename)
 		return(contents);
 	}
 	throw(errno);
-}
-
-void Shader::SetUniformMat4f(const std::string& name, const glm::mat4& matrix)
-{
-	// Retrieve the location of the uniform variable from the shader program
-	GLint location = glGetUniformLocation(ID, name.c_str());
-	// Set the uniform variable's value
-	glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
 // Constructor that build the Shader Program from 2 different shaders

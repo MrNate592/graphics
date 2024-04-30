@@ -7,19 +7,16 @@
 #include<sstream>
 #include<iostream>
 #include<cerrno>
-#include <glm/fwd.hpp>
 
 std::string get_file_contents(const char* filename);
 
 class Shader
 {
 public:
-
 	// Reference ID of the Shader Program
 	GLuint ID;
 	// Constructor that build the Shader Program from 2 different shaders
 	Shader(const char* vertexFile, const char* fragmentFile);
-	    void SetUniformMat4f(const std::string& name, const glm::mat4& matrix);
 
 	// Activates the Shader Program
 	void Activate();
